@@ -1,19 +1,24 @@
 import functions_framework
 import openai
+from dotenv import load_dotenv
+import os
+
+# Global variable to store conversation history
+conversation = []
 
 def gpt_chat(request):
+    global conversation
+
     # Get the input data from the request
     request_json = request.get_json(silent=True)
     message = request_json.get('message', '')
-    model = request_json.get('model', 'text-davinci-003')  # Default to text-davinci-003 if model is not specified
-    temperature = request_json.get('temperature', 0.7)    # Default to 0.7 if temperature is not specified
-    max_tokens = request_json.get('max_tokens', 150)      # Default to 150 if max_tokens is not specified
+    model = 'gpt-3.5-turbo'
+    temperature = request_json.get('temperature', 0.7)
+    max_tokens = request_json.get('max_tokens', 150)
 
-    # Set your OpenAI GPT-3 API key here
-    openai.api_key = 'YOUR_API_OPENAI_KEY'
-
-    # Retrieve the conversation history from the request (if any)
-    conversation = request_json.get('conversation', [])
+    load_dotenv()
+    # OpenAI API key
+    openai.api_key = os.getenv('OPENAI_API_KEY')
 
     # Append the new message to the conversation
     conversation.append({"role": "user", "content": message})
@@ -21,13 +26,14 @@ def gpt_chat(request):
     # Concatenate the conversation history into a single prompt with '\n' as a delimiter
     prompt = "\n".join([f"{message['role']}: {message['content']}" for message in conversation])
 
-    response = openai.Completion.create(
+    response = openai.ChatCompletion.create(
         model=model,
-        prompt=prompt,
+        messages=[{"role": "system", "content": "You are a helpful assistant."}] + conversation[-5:],
         temperature=temperature,
         max_tokens=max_tokens
     )
 
     # Extract the assistant's reply and return it
-    assistant_reply = response['choices'][0]['text'].strip()  # Strip leading and trailing whitespace
+    assistant_reply = response['choices'][0]['message']['content']
+    conversation.append({"role": "assistant", "content": assistant_reply})
     return {'response': assistant_reply}

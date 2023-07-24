@@ -6,7 +6,6 @@ def gpt_chat_api(message, conversation):
 
     data = {
         'message': message,
-        'model': 'text-davinci-003',
         'temperature': 0.7,
         'max_tokens': 150,
         'conversation': conversation.copy()
