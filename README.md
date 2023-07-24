@@ -26,15 +26,15 @@ This project implements a smart Chat Bot powered by the OpenAI API and built usi
 2. **Clone the Repository:**
    - First, clone the Chat Bot repository from GitHub to your local machine. You can use the following command to clone the repository:
      ```
-     git clone https://github.com/your_username/chat-bot-with-openai.git
+     git clone https://github.com/AdityaShahi4465/python-openai-chatbot.git
      ```
-     Replace `your_username` with your GitHub username.
 
 3. **Install Dependencies:**
    - Navigate to the project directory and install the required dependencies using pip. Run the following command:
      ```
      cd chat-bot-with-openai
-     pip install -r requirements.txt
+     pip install openai
+     pip install function-framwork
      ```
 
 4. **Set Up OpenAI API Key:**
@@ -48,7 +48,15 @@ This project implements a smart Chat Bot powered by the OpenAI API and built usi
      ```
      This will start the Chat Bot and wait for your input.
 
-6. **Start the Conversation:**
+
+6. **Run the Chat Bot:**
+   - Now run the server. Use the following command:
+     ```
+      functions-framework --target=gpt_chat
+     ```
+     This will start the server on localhost.
+
+7. **Start the Conversation:**
    - Type your messages in the console to initiate the conversation with the Chat Bot.
    - The Chat Bot will respond interactively based on the context of the conversation.
 
