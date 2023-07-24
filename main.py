@@ -10,7 +10,7 @@ def gpt_chat(request):
     max_tokens = request_json.get('max_tokens', 150)      # Default to 150 if max_tokens is not specified
 
     # Set your OpenAI GPT-3 API key here
-    openai.api_key = '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'
+    openai.api_key = 'YOUR_API_OPENAI_KEY'
 
     # Retrieve the conversation history from the request (if any)
     conversation = request_json.get('conversation', [])
