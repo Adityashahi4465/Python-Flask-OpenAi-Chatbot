@@ -1,4 +1,4 @@
-# Chat Bot with OpenAI API and Python 🤖🐍
+# Chat Bot with OpenAI API and Python-Flask 🤖🐍
 
 ## Description 📚
 
