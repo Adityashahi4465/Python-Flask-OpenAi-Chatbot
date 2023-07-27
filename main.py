@@ -1,20 +1,22 @@
-import functions_framework
 import openai
 from dotenv import load_dotenv
 import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 # Global variable to store conversation history
 conversation = []
 
-def gpt_chat(request):
+app = Flask(__name__)
+CORS(app)
+
+def gpt_chat(request_data):
     global conversation
 
-    # Get the input data from the request
-    request_json = request.get_json(silent=True)
-    message = request_json.get('message', '')
+    message = request_data.get('message', '')
     model = 'gpt-3.5-turbo'
-    temperature = request_json.get('temperature', 0.7)
-    max_tokens = request_json.get('max_tokens', 150)
+    temperature = request_data.get('temperature', 0.7)
+    max_tokens = request_data.get('max_tokens', 150)
 
     load_dotenv()
     # OpenAI API key
@@ -36,4 +38,16 @@ def gpt_chat(request):
     # Extract the assistant's reply and return it
     assistant_reply = response['choices'][0]['message']['content']
     conversation.append({"role": "assistant", "content": assistant_reply})
-    return {'response': assistant_reply}
+    return assistant_reply
+
+@app.route('/gpt_chat', methods=['POST'])
+def handle_gpt_chat():
+    if not request.json or 'message' not in request.json:
+        return jsonify({'error': 'Invalid request data. Missing "message" key.'}), 400
+
+    request_data = request.json
+    response = gpt_chat(request_data)
+    return jsonify({'response': response})
+
+if __name__ == '__main__':
+    app.run()
