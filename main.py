@@ -16,7 +16,7 @@ def gpt_chat(request_data):
     message = request_data.get('message', '')
     model = 'gpt-3.5-turbo'
     temperature = request_data.get('temperature', 0.7)
-    max_tokens = request_data.get('max_tokens', 150)
+    max_tokens = request_data.get('max_tokens', 500)
 
     load_dotenv()
     # OpenAI API key
@@ -39,6 +39,10 @@ def gpt_chat(request_data):
     assistant_reply = response['choices'][0]['message']['content']
     conversation.append({"role": "assistant", "content": assistant_reply})
     return assistant_reply
+
+@app.route('/',methods=['GET'])
+def home():
+    return jsonify({"Hello world"});
 
 @app.route('/gpt_chat', methods=['POST'])
 def handle_gpt_chat():
