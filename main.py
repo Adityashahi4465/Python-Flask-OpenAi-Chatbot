@@ -40,9 +40,9 @@ def gpt_chat(request_data):
     conversation.append({"role": "assistant", "content": assistant_reply})
     return assistant_reply
 
-@app.route('/',methods=['GET'])
+@app.route('/get')
 def home():
-    return jsonify({"Hello world"});
+    return "Hello world";
 
 @app.route('/gpt_chat', methods=['POST'])
 def handle_gpt_chat():
