@@ -70,4 +70,4 @@ Contributions and feedback are welcome! Feel free to open issues or pull request
 
 ## Give the Project a Star! 🌟
 
-If you find this project helpful, please consider giving it a star on GitHub. It motivates the developers to continue improving the project. 🌟
+If you find this project helpful, please consider giving it a star. It motivates the developers to continue improving the project. 🌟
